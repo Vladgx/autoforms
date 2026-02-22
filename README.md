@@ -1,59 +1,191 @@
-# FormBuilder
+# AutoForms — Візуальний конструктор форм
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 21.1.4.
+**AutoForms** — це веб-застосунок для візуального створення динамічних форм без написання коду. Користувач перетягує компоненти з палітри на полотно, налаштовує їх властивості та отримує готову JSON-схему, яку можна використати для рендерингу форми в будь-якому Angular-застосунку.
 
-## Development server
+🚀 **Live Demo**: [https://vladgx.github.io/autoforms/](https://vladgx.github.io/autoforms/)
 
-To start a local development server, run:
+---
 
-```bash
-ng serve
+## Можливості
+
+- **Drag & Drop** — перетягування компонентів з палітри на полотно завдяки `@angular/cdk/drag-drop`
+- **Редагування властивостей** — панель для налаштування мітки, імені поля, placeholder, обов'язковості та варіантів вибору
+- **Попередній перегляд** — режим Preview рендерить форму в реальному часі на основі JSON-схеми
+- **JSON-схема** — вбудований переглядач генерованої схеми форми
+- **Динамічна форма** — компонент `DynamicFormComponent` рендерить будь-яку схему на льоту
+- **CI/CD** — автоматичне розгортання на GitHub Pages через GitHub Actions після кожного пушу в `main`
+
+---
+
+## Підтримувані типи компонентів
+
+| Тип | Опис | Angular Material |
+|---|---|---|
+| `input` | Текстове поле | `MatInputModule` |
+| `textarea` | Багаторядковий текст | `MatInputModule` |
+| `select` | Випадаючий список | `MatSelectModule` |
+| `checkbox` | Прапорець | `MatCheckboxModule` |
+| `radio` | Радіо-кнопки | `MatRadioModule` |
+| `datepicker` | Вибір дати | `MatDatepickerModule` |
+| `daterange` | Вибір діапазону дат (Період) | `MatDatepickerModule` |
+
+---
+
+## Технологічний стек
+
+| Технологія | Версія | Призначення |
+|---|---|---|
+| [Angular](https://angular.dev) | 21 | Основний фреймворк |
+| [Angular Material](https://material.angular.io) | 21 | UI-компоненти |
+| [Angular CDK](https://material.angular.io/cdk) | 21 | Drag & Drop, утиліти |
+| [RxJS](https://rxjs.dev) | 7.8 | Реактивне управління станом |
+| [TypeScript](https://www.typescriptlang.org) | 5.9 | Типізована розробка |
+| [Vitest](https://vitest.dev) | 4 | Юніт-тестування |
+| [GitHub Actions](https://github.com/features/actions) | — | CI/CD pipeline |
+| [GitHub Pages](https://pages.github.com) | — | Хостинг |
+| [OpenSpec](https://github.com/Vladgx/autoforms/tree/main/.openspec) | — | AI-driven специфікація проекту |
+
+---
+
+## Архітектура
+
+```
+src/app/
+├── components/
+│   ├── form-builder/               # Конструктор форм
+│   │   ├── form-builder-container/ # Головний лейаут конструктора
+│   │   ├── form-palette/           # Палітра доступних компонентів
+│   │   ├── form-canvas/            # Полотно для перетягування елементів
+│   │   ├── form-properties/        # Панель властивостей обраного елемента
+│   │   └── json-viewer/            # Переглядач JSON-схеми
+│   ├── dynamic-form/               # Рендеринг форми за JSON-схемою
+│   └── form-preview/               # Режим попереднього перегляду форми
+├── models/
+│   └── form.model.ts               # Типи: FormElement, FormSchema, FormItemType
+└── services/
+    └── form-builder.service.ts     # Стан форми, CRUD операції над елементами
 ```
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+### Модель даних
 
-## Code scaffolding
+```typescript
+export type FormItemType =
+  'input' | 'textarea' | 'select' | 'checkbox' | 'radio' | 'datepicker' | 'daterange';
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+export interface FormElement {
+  id: string;
+  type: FormItemType;
+  label: string;
+  name: string;
+  required?: boolean;
+  placeholder?: string;
+  options?: FormElementOption[];   // для select та radio
+  startDateLabel?: string;         // для daterange
+  endDateLabel?: string;           // для daterange
+}
 
-```bash
-ng generate component component-name
+export interface FormSchema {
+  elements: FormElement[];
+}
 ```
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+---
+
+## Початок роботи
+
+### Вимоги
+
+- [Node.js](https://nodejs.org) ≥ 22
+- [npm](https://www.npmjs.com) ≥ 11
+
+### Встановлення та запуск
 
 ```bash
+# Клонувати репозиторій
+git clone https://github.com/Vladgx/autoforms.git
+cd autoforms
+
+# Встановити залежності
+npm install
+
+# Запустити dev-сервер
+npm start
+```
+
+Застосунок буде доступний за адресою: [http://localhost:4200](http://localhost:4200)
+
+---
+
+## Команди
+
+| Команда | Опис |
+|---|---|
+| `npm start` | Запустити dev-сервер (`ng serve`) |
+| `npm run build` | Зібрати production-білд (`dist/`) |
+| `npm test` | Запустити юніт-тести (Vitest) |
+| `npm run watch` | Збирати у watch-режимі для розробки |
+
+---
+
+## CI/CD
+
+Проєкт автоматично розгортається на **GitHub Pages** після кожного пушу в гілку `main` за допомогою GitHub Actions:
+
+1. **build** — встановлення залежностей (`npm ci`) та збірка Angular-застосунку з `--base-href /autoforms/`
+2. **deploy** — публікація артефакту `dist/form-builder/browser` на GitHub Pages
+
+Конфігурація: [`.github/workflows/deploy.yml`](.github/workflows/deploy.yml)
+
+---
+
+## Генерація коду (Angular CLI)
+
+```bash
+# Створити новий компонент
+ng generate component components/my-component
+
+# Повна документація Angular CLI
 ng generate --help
 ```
 
-## Building
+---
 
-To build the project run:
+## OpenSpec — AI-driven розробка
 
-```bash
-ng build
+Проєкт використовує методологію **OpenSpec** — підхід до розробки разом з AI-асистентом, де чітко структурований контекст проекту зберігається прямо в репозиторії у вигляді `.md`-файлів. Це дозволяє AI-агенту (наприклад, Antigravity / GitHub Copilot) повністю розуміти архітектуру, стек та задачі без додаткових пояснень.
+
+### Структура `.openspec/`
+
+```
+.openspec/
+├── project.md      # Загальний контекст: опис проекту, стек, ключові файли
+├── spec.md         # Архітектурна специфікація: моделі даних, рендеринг, формат submit
+├── tasks.md        # Таск-трекер: виконані та заплановані задачі
+├── proposals/      # Активні пропозиції змін (AI-generated feature proposals)
+└── archive/        # Виконані пропозиції (зберігаються для контексту)
 ```
 
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
+### Як це працює
 
-## Running unit tests
+1. **`project.md`** — AI читає загальний опис проекту перед будь-якою задачею
+2. **`spec.md`** — містить архітектурні рішення, які AI зобов'язаний дотримуватися
+3. **`tasks.md`** — трекер задач у форматі `[ ]` / `[x]`; AI бере наступну задачу і реалізує її
+4. **`proposals/`** — AI генерує детальну пропозицію змін у форматі OpenSpec Proposal перед реалізацією
+5. **`archive/`** — після виконання задачі proposal переноситься в архів
 
-To execute unit tests with the [Vitest](https://vitest.dev/) test runner, use the following command:
+### Переваги
 
-```bash
-ng test
-```
+- ✅ AI завжди має актуальний контекст без повторних пояснень
+- ✅ Зміни проходять через review на рівні proposal, ще до написання коду
+- ✅ Архів зберігає повну історію прийнятих рішень
+- ✅ Будь-який розробник може зрозуміти проект через `.openspec/`
 
-## Running end-to-end tests
+---
 
-For end-to-end (e2e) testing, run:
+## Додаткові ресурси
 
-```bash
-ng e2e
-```
-
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
-
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+- [Angular Documentation](https://angular.dev)
+- [Angular Material Components](https://material.angular.io/components)
+- [Angular CDK Drag and Drop](https://material.angular.io/cdk/drag-drop/overview)
+- [Angular CLI Reference](https://angular.dev/tools/cli)
+- [OpenSpec — AI-driven Development](https://openspec.dev/)
