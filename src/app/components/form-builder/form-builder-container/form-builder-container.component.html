@@ -1,0 +1,31 @@
+<div class="fb-wrapper">
+    <mat-toolbar color="primary" class="header-toolbar">
+        <span>AutoForms Builder</span>
+        <span class="spacer"></span>
+        <button mat-icon-button (click)="fbService.toggleTheme()" title="Toggle Dark Mode">
+            <mat-icon>{{ fbService.isDarkMode() ? 'light_mode' : 'dark_mode' }}</mat-icon>
+        </button>
+    </mat-toolbar>
+
+    <div class="fb-layout">
+        <!-- Ліва панель: Палітра інструментів -->
+        <div class="fb-sidebar-left">
+            <app-form-palette></app-form-palette>
+        </div>
+
+        <!-- Центральна область: Canvas та Json Viewer -->
+        <div class="fb-main">
+            <div class="fb-canvas-area">
+                <app-form-canvas></app-form-canvas>
+            </div>
+            <div class="fb-json-area">
+                <app-json-viewer></app-json-viewer>
+            </div>
+        </div>
+
+        <!-- Права панель: Налаштування властивостей -->
+        <div class="fb-sidebar-right">
+            <app-form-properties></app-form-properties>
+        </div>
+    </div>
+</div>

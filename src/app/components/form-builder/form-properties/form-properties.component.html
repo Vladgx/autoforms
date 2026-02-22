@@ -1,0 +1,81 @@
+<div class="properties-container">
+    <h3>Властивості поля</h3>
+    <p class="subtitle" *ngIf="!selectedElement()">Оберіть елемент форми для налаштування</p>
+
+    <div *ngIf="selectedElement() as element" class="properties-form">
+        <div class="element-info">
+            <mat-icon color="primary">info</mat-icon>
+            <span>Тип: <strong>{{ element.type | uppercase }}</strong></span>
+        </div>
+
+        <form [formGroup]="propertiesForm">
+
+            <mat-form-field appearance="outline" class="full-width">
+                <mat-label>Назва поля (Label)</mat-label>
+                <input matInput formControlName="label">
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" class="full-width">
+                <mat-label>Ім'я змінної (Name)</mat-label>
+                <input matInput formControlName="name">
+                <mat-hint>Унікальне ім'я для JSON</mat-hint>
+            </mat-form-field>
+
+            <mat-form-field *ngIf="element.type !== 'checkbox' && element.type !== 'radio'" appearance="outline"
+                class="full-width">
+                <mat-label>Підказка (Placeholder)</mat-label>
+                <input matInput formControlName="placeholder">
+            </mat-form-field>
+
+            <div class="toggle-container">
+                <mat-checkbox formControlName="required">Обов'язкове поле (Required)</mat-checkbox>
+            </div>
+
+            <!-- Редактор Options для Select та Radio -->
+            <div *ngIf="hasOptions(element.type)" class="options-editor">
+                <div class="options-header">
+                    <h4>Опції списку</h4>
+                    <button mat-icon-button color="primary" type="button" (click)="addOption()" title="Додати опцію">
+                        <mat-icon>add_circle</mat-icon>
+                    </button>
+                </div>
+
+                <div formArrayName="options">
+                    <div *ngFor="let opt of optionsArray.controls; let i = index" [formGroupName]="i"
+                        class="option-row">
+                        <mat-form-field appearance="outline" class="option-field">
+                            <mat-label>Текст</mat-label>
+                            <input matInput formControlName="label">
+                        </mat-form-field>
+
+                        <mat-form-field appearance="outline" class="option-field">
+                            <mat-label>Значення</mat-label>
+                            <input matInput formControlName="value">
+                        </mat-form-field>
+
+                        <button mat-icon-button color="warn" type="button" (click)="removeOption(i)"
+                            [disabled]="optionsArray.length <= 1">
+                            <mat-icon>remove_circle</mat-icon>
+                        </button>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Редактор Daterange міток -->
+            <div *ngIf="isDaterange(element.type)" class="options-editor">
+                <h4>Мітки полів дат</h4>
+                <mat-form-field appearance="outline" class="full-width">
+                    <mat-label>Мітка "Від"</mat-label>
+                    <input matInput formControlName="startDateLabel" placeholder="Від">
+                </mat-form-field>
+                <mat-form-field appearance="outline" class="full-width">
+                    <mat-label>Мітка "До"</mat-label>
+                    <input matInput formControlName="endDateLabel" placeholder="До">
+                </mat-form-field>
+            </div>
+
+        </form>
+
+    </div>
+</div>

@@ -1,0 +1,41 @@
+<div class="canvas-container" (click)="deselectAll($event)">
+    <div class="canvas-header">
+        <h2>Робоча область форми</h2>
+        <p>Перетягніть сюди елементи з панелі інструментів або сортуйте існуючі</p>
+    </div>
+
+    <div class="canvas-drop-zone" cdkDropList [cdkDropListData]="elements()" id="canvas-list"
+        (cdkDropListDropped)="drop($event)" [class.empty]="elements().length === 0">
+        <div *ngIf="elements().length === 0" class="empty-placeholder">
+            <mat-icon>post_add</mat-icon>
+            <p>Форма порожня. Додайте перший елемент.</p>
+        </div>
+
+        <!-- Список доданих елементів -->
+        <div class="canvas-item" *ngFor="let el of elements()" cdkDrag [cdkDragData]="el"
+            [class.selected]="selectedElement()?.id === el.id" (click)="selectElement(el.id, $event)">
+            <div class="item-drag-handle" cdkDragHandle>
+                <mat-icon>drag_indicator</mat-icon>
+            </div>
+
+            <div class="item-content">
+                <mat-icon class="type-icon">{{ getIconForType(el.type) }}</mat-icon>
+                <div class="item-details">
+                    <span class="item-label">{{ el.label }} <span *ngIf="el.required" class="required">*</span></span>
+                    <span class="item-type">{{ el.type }} ({{ el.name }})</span>
+                </div>
+            </div>
+
+            <div class="item-actions">
+                <button mat-icon-button color="warn" (click)="removeElement(el.id, $event)">
+                    <mat-icon>delete</mat-icon>
+                </button>
+            </div>
+
+            <div *cdkDragPreview class="canvas-item-preview">
+                <mat-icon>{{ getIconForType(el.type) }}</mat-icon>
+                <span>{{ el.label }}</span>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,59 @@
+.fb-wrapper {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    width: 100%;
+}
+
+.header-toolbar {
+    z-index: 10;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.spacer {
+    flex: 1 1 auto;
+}
+
+.fb-layout {
+    display: flex;
+    flex: 1;
+    overflow: hidden;
+    background-color: var(--mat-sys-surface-variant);
+}
+
+.fb-sidebar-left {
+    width: 300px;
+    min-width: 300px;
+    background-color: var(--mat-sys-surface);
+    z-index: 2;
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.05);
+}
+
+.fb-main {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    min-width: 500px;
+    overflow: hidden;
+}
+
+.fb-canvas-area {
+    flex: 1;
+    overflow-y: auto;
+}
+
+.fb-json-area {
+    height: 250px;
+    min-height: 250px;
+    background-color: var(--mat-sys-surface);
+    z-index: 2;
+    box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.05);
+}
+
+.fb-sidebar-right {
+    width: 350px;
+    min-width: 350px;
+    background-color: var(--mat-sys-surface);
+    z-index: 2;
+    box-shadow: -2px 0 5px rgba(0, 0, 0, 0.05);
+}

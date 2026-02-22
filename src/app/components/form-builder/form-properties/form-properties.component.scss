@@ -1,0 +1,89 @@
+.properties-container {
+    padding: 16px;
+    background-color: var(--mat-sys-surface-container-low);
+    border-left: 1px solid var(--mat-sys-outline-variant);
+    height: 100%;
+    box-sizing: border-box;
+    overflow-y: auto;
+}
+
+h3 {
+    margin-top: 0;
+    margin-bottom: 4px;
+    font-weight: 500;
+    color: var(--mat-sys-on-surface);
+}
+
+.subtitle {
+    font-size: 14px;
+    color: var(--mat-sys-on-surface-variant);
+    font-style: italic;
+    margin-bottom: 16px;
+}
+
+.properties-form {
+    margin-top: 16px;
+}
+
+.element-info {
+    display: flex;
+    align-items: center;
+    background-color: var(--mat-sys-primary-container);
+    padding: 8px 12px;
+    border-radius: 4px;
+    margin-bottom: 24px;
+
+    mat-icon {
+        margin-right: 8px;
+        font-size: 20px;
+        width: 20px;
+        height: 20px;
+        color: var(--mat-sys-on-primary-container);
+    }
+
+    span {
+        font-size: 14px;
+        color: var(--mat-sys-on-primary-container);
+    }
+}
+
+.full-width {
+    width: 100%;
+    margin-bottom: 8px;
+}
+
+.toggle-container {
+    margin: 8px 0 24px 0;
+}
+
+/* Options Editor */
+.options-editor {
+    border-top: 1px solid var(--mat-sys-outline-variant);
+    padding-top: 16px;
+    margin-top: 8px;
+}
+
+.options-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 12px;
+
+    h4 {
+        margin: 0;
+        font-weight: 500;
+        color: var(--mat-sys-on-surface-variant);
+    }
+}
+
+.option-row {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    margin-bottom: -8px;
+    /* Offset the margin bottom of mat-form-field */
+}
+
+.option-field {
+    flex: 1;
+}

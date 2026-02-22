@@ -1,0 +1,67 @@
+<div [formGroup]="formName" class="dynamic-field-container">
+
+    <mat-form-field *ngIf="field.type === 'input'" class="full-width" appearance="outline">
+        <mat-label>{{ field.label }}</mat-label>
+        <input matInput [formControlName]="field.name" [placeholder]="field.placeholder || ''"
+            [required]="field.required || false">
+        <mat-error *ngIf="!isValid">Обов'язкове поле</mat-error>
+    </mat-form-field>
+
+    <mat-form-field *ngIf="field.type === 'textarea'" class="full-width" appearance="outline">
+        <mat-label>{{ field.label }}</mat-label>
+        <textarea matInput [formControlName]="field.name" [placeholder]="field.placeholder || ''"
+            [required]="field.required || false" rows="3"></textarea>
+        <mat-error *ngIf="!isValid">Обов'язкове поле</mat-error>
+    </mat-form-field>
+
+    <mat-form-field *ngIf="field.type === 'select'" class="full-width" appearance="outline">
+        <mat-label>{{ field.label }}</mat-label>
+        <mat-select [formControlName]="field.name" [required]="field.required || false">
+            <mat-option *ngFor="let opt of field.options" [value]="opt.value">{{ opt.label }}</mat-option>
+        </mat-select>
+        <mat-error *ngIf="!isValid">Обов'язкове поле</mat-error>
+    </mat-form-field>
+
+    <div *ngIf="field.type === 'checkbox'" class="field-margin">
+        <mat-checkbox [formControlName]="field.name">{{ field.label }}</mat-checkbox>
+    </div>
+
+    <div *ngIf="field.type === 'radio'" class="field-margin">
+        <label class="radio-label">{{ field.label }}<span *ngIf="field.required" class="required-star">*</span></label>
+        <mat-radio-group [formControlName]="field.name">
+            <mat-radio-button *ngFor="let opt of field.options" [value]="opt.value" class="radio-button">
+                {{ opt.label }}
+            </mat-radio-button>
+        </mat-radio-group>
+        <mat-error *ngIf="field.required && !isValid && formName.controls[field.name].touched"
+            class="radio-error">Обов'язкове поле</mat-error>
+    </div>
+
+    <mat-form-field *ngIf="field.type === 'datepicker'" class="full-width" appearance="outline">
+        <mat-label>{{ field.label }}</mat-label>
+        <input matInput [matDatepicker]="picker" [formControlName]="field.name" [placeholder]="field.placeholder || ''"
+            [required]="field.required || false">
+        <mat-hint>ДД.ММ.РРРР</mat-hint>
+        <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+        <mat-error *ngIf="!isValid">Обов'язкове поле</mat-error>
+    </mat-form-field>
+
+    <mat-form-field *ngIf="field.type === 'daterange'" class="full-width" appearance="outline">
+        <mat-label>{{ field.label }}</mat-label>
+        <mat-date-range-input [rangePicker]="rangePicker" [required]="field.required || false">
+            <input matStartDate [formControlName]="field.name + '_start'" [placeholder]="field.startDateLabel || 'Від'">
+            <input matEndDate [formControlName]="field.name + '_end'" [placeholder]="field.endDateLabel || 'До'">
+        </mat-date-range-input>
+        <mat-hint>ДД.ММ.РРРР – ДД.ММ.РРРР</mat-hint>
+        <mat-datepicker-toggle matIconSuffix [for]="rangePicker"></mat-datepicker-toggle>
+        <mat-date-range-picker #rangePicker></mat-date-range-picker>
+        <mat-error *ngIf="formName.controls[field.name + '_start']?.invalid">
+            Вкажіть початкову дату
+        </mat-error>
+        <mat-error *ngIf="formName.controls[field.name + '_end']?.invalid">
+            Вкажіть кінцеву дату
+        </mat-error>
+    </mat-form-field>
+
+</div>

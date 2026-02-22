@@ -1,0 +1,14 @@
+<form *ngIf="form && schema" [formGroup]="form" (ngSubmit)="onSubmit()" class="dynamic-form-wrapper">
+
+    <ng-container *ngFor="let element of schema.elements">
+        <app-dynamic-field [field]="element" [formName]="form"></app-dynamic-field>
+    </ng-container>
+
+    <div class="form-actions" *ngIf="schema.elements?.length">
+        <button mat-raised-button color="primary" type="submit">Надіслати</button>
+    </div>
+
+    <div *ngIf="!schema.elements || schema.elements.length === 0" class="empty-schema-message">
+        <p>Форма порожня. Додайте елементи у редакторі (Form Builder).</p>
+    </div>
+</form>

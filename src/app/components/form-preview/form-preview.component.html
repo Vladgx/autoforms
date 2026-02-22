@@ -1,0 +1,29 @@
+<div class="preview-dialog">
+    <div mat-dialog-title class="dialog-header">
+        <h2>Попередній перегляд форми</h2>
+        <button mat-icon-button (click)="closePreview()" class="close-btn">
+            <mat-icon>close</mat-icon>
+        </button>
+    </div>
+
+    <mat-dialog-content class="dialog-content">
+        <app-dynamic-form *ngIf="schema?.elements?.length" [schema]="schema" (formSubmit)="onFormSubmit($event)">
+        </app-dynamic-form>
+
+        <div *ngIf="!schema?.elements?.length" class="empty-state">
+            <p>Форма порожня. Додайте елементи у редакторі.</p>
+        </div>
+    </mat-dialog-content>
+
+    <!-- Модальне вікно для відображення результату -->
+    <ng-template #resultDialog>
+        <h2 mat-dialog-title>Дані успішно відправлені!</h2>
+        <mat-dialog-content>
+            <p>Ось інформація, яка була б надіслана на сервер:</p>
+            <pre class="result-json"><code>{{ submittedData | json }}</code></pre>
+        </mat-dialog-content>
+        <mat-dialog-actions align="end">
+            <button mat-button mat-dialog-close color="primary">Закрити</button>
+        </mat-dialog-actions>
+    </ng-template>
+</div>

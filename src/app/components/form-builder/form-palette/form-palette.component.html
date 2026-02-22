@@ -1,0 +1,20 @@
+<div class="palette-container">
+    <h3>Елементи форми</h3>
+    <p class="subtitle">Натисніть або перетягніть</p>
+
+    <!-- Підключаємо cdkDropList, з якого можна перетягувати -->
+    <div cdkDropList [cdkDropListData]="availableControls" cdkDropListConnectedTo="canvas-list" id="palette-list"
+        class="palette-list">
+        <div class="palette-item" *ngFor="let control of availableControls" cdkDrag [cdkDragData]="control"
+            (click)="addElement(control.type)" matRipple>
+            <mat-icon>{{ control.icon }}</mat-icon>
+            <span>{{ control.label }}</span>
+
+            <!-- Preview beim Dragging -->
+            <div *cdkDragPreview class="palette-item-preview">
+                <mat-icon>{{ control.icon }}</mat-icon>
+                <span>{{ control.label }}</span>
+            </div>
+        </div>
+    </div>
+</div>

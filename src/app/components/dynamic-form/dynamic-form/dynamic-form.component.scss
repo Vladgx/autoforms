@@ -1,0 +1,22 @@
+.dynamic-form-wrapper {
+    padding: 16px;
+    background-color: var(--mat-sys-surface);
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    min-height: 200px;
+}
+
+.form-actions {
+    margin-top: 16px;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.empty-schema-message {
+    text-align: center;
+    color: var(--mat-sys-on-surface-variant);
+    padding: 40px 20px;
+    border: 2px dashed var(--mat-sys-outline-variant);
+    border-radius: 8px;
+    font-style: italic;
+}

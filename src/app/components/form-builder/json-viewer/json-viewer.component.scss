@@ -1,0 +1,40 @@
+.json-container {
+    padding: 16px;
+    background-color: var(--mat-sys-surface-container-low);
+    border-top: 1px solid var(--mat-sys-outline-variant);
+    height: 100%;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+}
+
+.json-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 12px;
+
+    h3 {
+        margin: 0;
+        font-weight: 500;
+        color: var(--mat-sys-on-surface);
+    }
+
+    .preview-btn {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+    }
+}
+
+.json-content {
+    background-color: #282c34;
+    color: #abb2bf;
+    padding: 16px;
+    border-radius: 4px;
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 14px;
+    overflow: auto;
+    max-height: 250px;
+    margin: 0;
+}
